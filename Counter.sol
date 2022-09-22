@@ -15,11 +15,10 @@ contract Counter {
     
     
     
-    modifier increaseFirst {
-        require(count > 0 ,"First you need to increase the count");
+    modifier firstNeed {
+        require(count != 0 ,"Please increase or decrease the count first.");
         _;
     }
-    
     
     // function to increament count by 1
     function increaseByOne() public {
@@ -43,12 +42,12 @@ contract Counter {
 
     
     // function to multiply count by given number
-    function multiply(int256 _modulus) increaseFirst public{
+    function multiply(int256 _modulus) firstNeed public{
         count *= _modulus;
     }
 
     // function to divide count by given number
-    function divide(int256 _div) increaseFirst public{
+    function divide(int256 _div) firstNeed public{
         count /= _div;
     }
 }
