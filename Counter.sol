@@ -1,25 +1,29 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.13;
 
+import "./PriceConverter.sol";
+
 contract Counter {
+
+    using PriceConverter for uint256;
     int256 public count;
-    
-    
-    // Function to get the current count
-    // function get() public view returns (int256) {
-    //     // the current count is:
-    //     return count;
-    // }
-    // count public don't need to get function
-    
-    
-    
+    uint256 public constant MINIMUMUSD = 50 * 1e18;
+    address[] public funders;
+
+    mapping ( address => uint256) public addressToAmount;
+
     modifier firstNeed {
+        require(fundmMe(),"Please charge the contract.")
         require(count != 0 ,"Please increase or decrease the count first.");
         _;
     }
     
+    function fundmMe() public payable {
+        require(msg.value.getConversionRate() > MINIMUMUSD, "Didn't send enouph ETH!")
+        funders.push(msg.sender);
+        addressToAmount[msg.sender] = msg.value;
+    }
+
     // function to increament count by 1
     function increaseByOne() public {
         count += 1;
