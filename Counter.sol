@@ -13,12 +13,12 @@ contract Counter {
     mapping ( address => uint256) public addressToAmount;
 
     modifier firstNeed {
-        require(fundmMe(),"Please charge the contract.")
+        require(fundMe(),"Please charge the contract.")
         require(count != 0 ,"Please increase or decrease the count first.");
         _;
     }
     
-    function fundmMe() public payable {
+    function fundMe() public payable {
         require(msg.value.getConversionRate() > MINIMUMUSD, "Didn't send enouph ETH!")
         funders.push(msg.sender);
         addressToAmount[msg.sender] = msg.value;
