@@ -23,7 +23,7 @@ contract Counter {
     function fundMe() public payable {
         require(
             msg.value.getConversionRate() >= MINIMUMUSD,
-            "Didn't send enouph ETH!"
+            "Didn't send enough ETH!"
         );
         funders.push(msg.sender);
     }
